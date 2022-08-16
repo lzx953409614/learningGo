@@ -1,0 +1,8 @@
+<html>
+<body>
+    <p>hello, {{.title}}</p>
+    {{range $index, $ele := .userArr }}
+    <p>{{ $index }}: {{ $ele.Username }} is {{ $ele.Password }} helllll000000</p>
+    {{ end }}
+</body>
+</html>
