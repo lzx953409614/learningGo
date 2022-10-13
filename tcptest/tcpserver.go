@@ -29,7 +29,7 @@ func Tcpserverinit() {
 	if err != nil {
 		return
 	}
-	fmt.Printf("启动tcp服务端成功,ip:%s,port:%d", "127.0.0.1", 20000)
+	fmt.Printf("启动tcp服务端成功,ip:%s,port:%d\n", "127.0.0.1", 20000)
 	for {
 		// 等待客户端来建立连接
 		conn, err := listen.Accept()
