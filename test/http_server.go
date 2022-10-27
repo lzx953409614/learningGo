@@ -8,7 +8,11 @@ import (
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "hello this is a go http server")
+	result, err := io.WriteString(w, "hello this is a go http server")
+	if err != nil {
+		log.Printf("自定义go http server失败！err=%s",err)
+	}
+	log.Printf("自定义go http server 成功！result=%d",result)
 }
 
 func createHttpServer() {

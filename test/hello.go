@@ -15,8 +15,8 @@ import (
 )
 
 type User struct {
-	Username string `json: "username"`
-	Password string `json: "password"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // 定义全局的CORS中间件
@@ -96,7 +96,10 @@ func main() {
 	//POST json提交请求|gin方式接收 http://ip:port/postjson
 	r.POST("postjson1", func(c *gin.Context) {
 		json := make(map[string]interface{}) //注意该结构接受的内容
-		c.BindJSON(&json)
+		err := c.BindJSON(&json)
+		if nil != err {
+			log.Printf("err=%s",err)
+		}
 		log.Printf("%v", &json)
 		c.JSON(http.StatusOK, gin.H{
 			"username": json["username"],
@@ -107,7 +110,10 @@ func main() {
 	//POST json提交请求|struct方式接收
 	r.POST("postjson2", func(ctx *gin.Context) {
 		user := User{}
-		ctx.BindJSON(&user)
+		err := ctx.BindJSON(&user)
+		if nil != err {
+			log.Printf("err=%s",err)
+		}
 		username := user.Username
 		password := user.Password
 		ctx.JSON(http.StatusOK, gin.H{
@@ -140,7 +146,10 @@ func main() {
 	//分组路由
 	postjson3Handler := func(c *gin.Context) {
 		json := make(map[string]interface{}) //注意该结构接受的内容
-		c.BindJSON(&json)
+		err := c.BindJSON(&json)
+		if nil != err {
+			log.Printf("err=%s",err)
+		}
 		log.Printf("%v", &json)
 		c.JSON(http.StatusOK, gin.H{
 			"username": json["username"],
@@ -149,7 +158,10 @@ func main() {
 	}
 	postjson4Handler := func(ctx *gin.Context) {
 		user := User{}
-		ctx.BindJSON(&user)
+		err := ctx.BindJSON(&user)
+		if nil != err {
+			log.Printf("err=%s",err)
+		}
 		username := user.Username
 		password := user.Password
 		ctx.JSON(http.StatusOK, gin.H{
@@ -186,5 +198,8 @@ func main() {
 		})
 	})
 
-	r.Run(":8001")
+	err := r.Run(":8001")
+	if err != nil {
+		log.Printf("启动gin8001端口失败，err=%s",err)
+	}
 }
